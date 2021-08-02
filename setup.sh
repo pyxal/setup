@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# LINUX OS SETUP SCRIPT V1.2
+# LINUX OS SETUP SCRIPT V1.3
 #
 # Firewall setup
 # Full OS upgrade
@@ -45,7 +45,7 @@ chassis()
 
 
 # elevation
-echo "\nLinux OS setup script V1.2\n"
+echo "\nLinux OS setup script V1.3\n"
 sudo whoami
 
 # status variables
@@ -126,6 +126,7 @@ case "$OS" in
 
 		## clock config
 		xfconf-query -n -c xfce4-panel -p "/plugins/plugin-12/digital-format" -t string -s "%d/%m/%y  %H:%M" &&
+		sudo timedatectl set-timezone Europe/Copenhagen &&
 
 		## restart xfce4 panel
 		echo "Restarting XFCE4 panel..." &&
