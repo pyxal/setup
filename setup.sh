@@ -1,11 +1,12 @@
 #!/bin/sh
 
-# LINUX OS SETUP SCRIPT V1.4
+# LINUX OS SETUP SCRIPT V1.5
 #
 # Firewall setup
 # Full OS upgrade
 # speedtest-cli
 # gnome-chess
+# doom
 # Environment config
 
 
@@ -33,6 +34,7 @@ status()
 }
 
 
+
 # check OS
 OS=$(cat /etc/issue | awk '{print $1, $2}' | sed -e 's/^[ \t]*//')
 
@@ -42,7 +44,7 @@ CHASSIS=$(hostnamectl status | grep Chassis | cut -f2 -d ":" | tr -d ' ')
 
 
 # elevation
-echo "\nLinux OS setup script V1.4\n"
+echo "\nLinux OS setup script V1.5\n"
 sudo whoami
 
 # status variables
@@ -50,6 +52,7 @@ UFWSETUP=false
 FULLUPGRADE=false
 SPEEDTESTCLI=false
 GNOMECHESS=false
+DOOM=false
 ENVIRONMENTCONFIG=false
 
 
@@ -102,6 +105,16 @@ GNOMECHESS=true || GNOMECHESS=false
 
 # gnome-chess status
 status "install" $GNOMECHESS "gnome-chess"
+
+
+
+# install doom
+echo "\nInstalling doom...\n"
+sudo apt install -y chocolate-doom doom-wad-shareware prboom-plus freedoom &&
+DOOM=true || DOOM=false
+
+# doom status
+status "install" $DOOM "doom"
 
 
 
@@ -172,8 +185,14 @@ status "check" $UFWSETUP "Firewall setup"
 status "check" $FULLUPGRADE "Full-upgrade"
 status "check" $SPEEDTESTCLI "speedtest-cli"
 status "check" $GNOMECHESS "gnome-chess"
+status "check" $DOOM "doom"
 status "check" $ENVIRONMENTCONFIG "Environment setup"
 
+
+# clean up
+if [ -d "./setup/.git/" ]; then
+	rm -rf ./setup
+fi;
 
 
 # end message
